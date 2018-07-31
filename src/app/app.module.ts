@@ -29,6 +29,11 @@ import { SupportPage } from '../pages/support/support';
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { AuthService } from '../providers/auth/auth.service';
+import { AuthGuard } from '../providers/auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -51,6 +56,8 @@ import { UserData } from '../providers/user-data';
   imports: [
     BrowserModule,
     HttpModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
         { component: TabsPage, name: 'TabsPage', segment: 'tabs-page' },
@@ -89,6 +96,8 @@ import { UserData } from '../providers/user-data';
     SupportPage
   ],
   providers: [
+    AuthService,
+    AuthGuard,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
     UserData,
