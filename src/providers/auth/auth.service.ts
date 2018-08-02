@@ -76,4 +76,15 @@ export class AuthService {
     isLoggedIn(): Observable<boolean> {
         return this.userInfo.pipe(map(userInfo => !userInfo.isAnonymous));
     }
+
+    createUser(email: string, password: string): Observable<string> {
+
+        let result = new Subject<string>();
+
+        this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password).then(() => {
+            result.next("success");
+        }).catch(err => result.error(err));
+
+        return result.asObservable();
+    }
 }

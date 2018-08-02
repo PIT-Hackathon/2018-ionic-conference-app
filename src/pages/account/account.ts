@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
+import {AuthGuard} from "../../providers/auth/auth.guard";
 
 
 @Component({
@@ -12,8 +13,15 @@ import { UserData } from '../../providers/user-data';
 export class AccountPage {
   username: string;
 
-  constructor(public alertCtrl: AlertController, public nav: NavController, public userData: UserData) {
+  constructor(
+    private authGuard: AuthGuard,
+    public alertCtrl: AlertController,
+    public nav: NavController,
+    public userData: UserData
+  ) {}
 
+  ionViewCanEnter(): boolean{
+    return !!this.authGuard.canActivate();
   }
 
   ngAfterViewInit() {
